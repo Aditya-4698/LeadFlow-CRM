@@ -7,3 +7,14 @@ packaging==26.2
 sqlparse==0.5.5
 tzdata==2026.3
 whitenoise==6.12.0
+asgiref==3.12.1
+Django==6.0.7
+django-filter==26.1
+djangorestframework==3.17.1
+gunicorn==26.0.0
+packaging==26.2
+sqlparse==0.5.5
+tzdata==2026.3
+whitenoise==6.12.0
+dj-database-url
+psycopg2-binary
