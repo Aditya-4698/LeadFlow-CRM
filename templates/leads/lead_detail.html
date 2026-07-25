@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Lead Details{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Lead Details</h2>
+
+<div class="row">
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-header">
+                Lead Information
+            </div>
+
+            <div class="card-body">
+
+                <p><strong>Name:</strong> {{ lead.name }}</p>
+
+                <p><strong>Email:</strong> {{ lead.email }}</p>
+
+                <p><strong>Phone:</strong> {{ lead.phone }}</p>
+
+                <p><strong>Company:</strong> {{ lead.company }}</p>
+
+                <p><strong>Source:</strong> {{ lead.source }}</p>
+
+                <p><strong>Status:</strong> {{ lead.status }}</p>
+
+                <p><strong>Assigned To:</strong> {{ lead.assigned_to }}</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-6">
+
+        <div class="card shadow">
+
+            <div class="card-header">
+
+                Activity Timeline
+
+            </div>
+
+            <div class="card-body">
+
+                <ul class="list-group">
+
+                {% for activity in activities %}
+
+                    <li class="list-group-item">
+
+                        {{ activity.action }}
+
+                        <br>
+
+                        <small class="text-muted">
+
+                            {{ activity.created_at }}
+
+                        </small>
+
+                    </li>
+
+                {% empty %}
+
+                    <li class="list-group-item">
+
+                        No Activity
+
+                    </li>
+
+                {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<div class="card shadow">
+
+    <div class="card-header">
+
+        Notes
+
+    </div>
+
+    <div class="card-body">
+
+        <h5>Add Note</h5>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="btn btn-primary">
+
+                Save Note
+
+            </button>
+
+        </form>
+
+        <hr>
+
+        {% for note in notes %}
+
+        <div class="border rounded p-3 mb-2">
+
+            <strong>{{ note.user }}</strong>
+
+            <small class="text-muted float-end">
+
+                {{ note.created_at|date:"d M Y H:i" }}
+
+            </small>
+
+            <p class="mt-2 mb-0">
+
+                {{ note.note }}
+
+            </p>
+
+        </div>
+
+        {% empty %}
+
+        <p>No Notes Yet</p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

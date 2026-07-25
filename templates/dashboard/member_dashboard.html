@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Member Dashboard{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">My Dashboard</h2>
+
+<div class="row">
+
+    <div class="col-md-3">
+
+        <div class="stats-card blue">
+
+            <h5>Assigned Leads</h5>
+
+            <h2>{{ total_assigned }}</h2>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br>
+
+<div class="card">
+
+    <div class="card-header">
+
+        My Leads
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Company</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for lead in assigned_leads %}
+
+                <tr>
+
+                    <td>{{ lead.name }}</td>
+
+                    <td>{{ lead.company }}</td>
+
+                    <td>{{ lead.status }}</td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="3">
+
+                        No Assigned Leads
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

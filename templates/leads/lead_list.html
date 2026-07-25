@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}Leads{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between mb-3">
+
+    <h2>Lead Management</h2>
+
+    <a href="{% url 'add_lead' %}" class="btn btn-primary">
+        Add Lead
+    </a>
+
+</div>
+
+<form method="GET" class="row mb-4">
+
+    <div class="col-md-5">
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search|default:'' }}"
+            class="form-control"
+            placeholder="Search Lead..."
+        >
+
+    </div>
+
+    <div class="col-md-3">
+
+        <select
+            name="status"
+            class="form-select"
+        >
+
+            <option value="">All Status</option>
+
+            <option value="New">New</option>
+
+            <option value="Contacted">Contacted</option>
+
+            <option value="Qualified">Qualified</option>
+
+            <option value="Proposal Sent">Proposal Sent</option>
+
+            <option value="Won">Won</option>
+
+            <option value="Lost">Lost</option>
+
+        </select>
+
+    </div>
+
+    <div class="col-md-2">
+
+        <button class="btn btn-primary w-100">
+
+            Search
+
+        </button>
+
+    </div>
+
+</form>
+
+<table class="table table-bordered table-hover">
+
+    <thead class="table-dark">
+
+        <tr>
+
+            <th>Name</th>
+
+            <th>Company</th>
+
+            <th>Email</th>
+
+            <th>Status</th>
+
+            <th>Assigned To</th>
+
+            <th>Action</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for lead in page_obj %}
+
+        <tr>
+
+            <td>
+                <a href="{% url 'lead_detail' lead.id %}">
+                    {{ lead.name }}
+                </a>
+            </td>
+
+            <td>{{lead.company}}</td>
+
+            <td>{{lead.email}}</td>
+
+            <td>
+
+                {% if lead.status == "New" %}
+
+                <span class="badge bg-primary">New</span>
+
+                {% elif lead.status == "Contacted" %}
+
+                <span class="badge bg-info">Contacted</span>
+
+                {% elif lead.status == "Qualified" %}
+
+                <span class="badge bg-warning text-dark">Qualified</span>
+
+                {% elif lead.status == "Proposal Sent" %}
+
+                <span class="badge bg-secondary">Proposal Sent</span>
+
+                {% elif lead.status == "Won" %}
+
+                <span class="badge bg-success">Won</span>
+
+                {% else %}
+
+                <span class="badge bg-danger">Lost</span>
+
+                {% endif %}
+
+            </td>
+
+            <td>{{lead.assigned_to}}</td>
+
+            <td>
+
+                <a href="{% url 'lead_detail' lead.id %}" class="btn btn-info btn-sm">
+                    View
+                </a>
+
+                <a href="{% url 'edit_lead' lead.id %}" class="btn btn-warning btn-sm">
+                    Edit
+                </a>
+
+                <a href="{% url 'delete_lead' lead.id %}" class="btn btn-danger btn-sm"
+                    onclick="return confirm('Delete this lead?')">
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="5">
+
+                No Leads Found
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+<nav>
+
+<ul class="pagination justify-content-center">
+
+{% if page_obj.has_previous %}
+
+<li class="page-item">
+
+<a
+class="page-link"
+href="?page={{ page_obj.previous_page_number }}&search={{ search }}&status={{ status }}"
+>
+
+Previous
+
+</a>
+
+</li>
+
+{% endif %}
+
+<li class="page-item active">
+
+<span class="page-link">
+
+{{ page_obj.number }}
+
+</span>
+
+</li>
+
+{% if page_obj.has_next %}
+
+<li class="page-item">
+
+<a
+class="page-link"
+href="?page={{ page_obj.next_page_number }}&search={{ search }}&status={{ status }}"
+>
+
+Next
+
+</a>
+
+</li>
+
+{% endif %}
+
+</ul>
+
+</nav>
+
+{% endblock %}

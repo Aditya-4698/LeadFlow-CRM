@@ -1,0 +1,36 @@
+<div class="sidebar">
+
+    <div class="brand">
+        <i class="bi bi-layers-fill"></i>
+        <span>LeadFlow CRM</span>
+    </div>
+
+    <hr>
+
+    <a href="{% url 'dashboard' %}" class="active">
+        <i class="bi bi-speedometer2"></i>
+        Dashboard
+    </a>
+
+    <a href="{% url 'lead_list' %}">
+        <i class="bi bi-people-fill"></i>
+        Leads
+    </a>
+
+    <a href="{% url 'add_lead' %}">
+        <i class="bi bi-person-plus-fill"></i>
+        Add Lead
+    </a>
+
+    <div class="mt-auto pt-4">
+        <small class="text-secondary px-3 d-block mb-2">
+            Logged in as
+        </small>
+
+        <div class="user-box">
+            <i class="bi bi-person-circle"></i>
+            {{ request.user.username }}
+        </div>
+    </div>
+
+</div>
